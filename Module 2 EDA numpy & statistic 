@@ -1,0 +1,831 @@
+Module 2: EDA with Applied Statistics – NumPy & Statistics (Simple Notes)
+
+
+---
+
+Part A: Core NumPy Operations
+
+1. What is NumPy?
+
+NumPy (Numerical Python) is a Python library used for fast numerical computations and working with arrays.
+
+Advantages
+
+Faster than Python lists
+
+Uses less memory
+
+Supports mathematical operations
+
+Widely used in Data Science, AI, and Machine Learning
+
+
+Import NumPy
+
+import numpy as np
+
+
+---
+
+2. Creating NumPy Arrays
+
+1D Array
+
+import numpy as np
+
+arr = np.array([10, 20, 30, 40])
+print(arr)
+
+2D Array
+
+arr = np.array([[1,2,3],
+                [4,5,6]])
+print(arr)
+
+
+---
+
+3. Indexing and Slicing of Arrays
+
+1D Indexing
+
+arr = np.array([10,20,30,40])
+
+print(arr[0])
+print(arr[-1])
+
+Output
+
+10
+40
+
+
+---
+
+1D Slicing
+
+print(arr[1:3])
+
+Output
+
+[20 30]
+
+
+---
+
+2D Indexing
+
+arr = np.array([[1,2,3],
+                [4,5,6]])
+
+print(arr[0,1])
+print(arr[1,2])
+
+Output
+
+2
+6
+
+
+---
+
+2D Slicing
+
+print(arr[:,1:])
+
+Output
+
+[[2 3]
+ [5 6]]
+
+
+---
+
+4. Indexing with Boolean Arrays
+
+arr = np.array([10,20,30,40])
+
+print(arr[arr > 20])
+
+Output
+
+[30 40]
+
+
+---
+
+5. Updating NumPy Array
+
+arr = np.array([1,2,3])
+
+arr[1] = 50
+
+print(arr)
+
+Output
+
+[1 50 3]
+
+
+---
+
+6. Insert, Append and Delete
+
+Insert
+
+arr = np.array([1,2,3])
+
+arr = np.insert(arr,1,10)
+
+print(arr)
+
+
+---
+
+Append
+
+arr = np.append(arr,20)
+
+print(arr)
+
+
+---
+
+Delete
+
+arr = np.delete(arr,2)
+
+print(arr)
+
+
+---
+
+7. Array Shape Manipulation
+
+reshape()
+
+Changes the shape of an array.
+
+arr = np.array([1,2,3,4,5,6])
+
+print(arr.reshape(2,3))
+
+Output
+
+[[1 2 3]
+ [4 5 6]]
+
+
+---
+
+ravel()
+
+Converts a multi-dimensional array into a 1D array.
+
+arr.ravel()
+
+
+---
+
+flatten()
+
+Returns a copy of the array as a 1D array.
+
+arr.flatten()
+
+
+---
+
+transpose()
+
+Converts rows into columns.
+
+arr = np.array([[1,2],
+                [3,4]])
+
+print(arr.T)
+
+Output
+
+[[1 3]
+ [2 4]]
+
+
+---
+
+8. Array Manipulations
+
+concatenate()
+
+a = np.array([1,2])
+b = np.array([3,4])
+
+print(np.concatenate((a,b)))
+
+Output
+
+[1 2 3 4]
+
+
+---
+
+vstack()
+
+Vertical stacking
+
+print(np.vstack((a,b)))
+
+Output
+
+[[1 2]
+ [3 4]]
+
+
+---
+
+hstack()
+
+Horizontal stacking
+
+print(np.hstack((a,b)))
+
+Output
+
+[1 2 3 4]
+
+
+---
+
+column_stack()
+
+print(np.column_stack((a,b)))
+
+Output
+
+[[1 3]
+ [2 4]]
+
+
+---
+
+hsplit()
+
+arr = np.array([[1,2],
+                [3,4]])
+
+print(np.hsplit(arr,2))
+
+
+---
+
+vsplit()
+
+print(np.vsplit(arr,2))
+
+
+---
+
+9. Sorting Arrays
+
+sort()
+
+Sorts elements in ascending order.
+
+arr = np.array([5,2,1,4])
+
+print(np.sort(arr))
+
+Output
+
+[1 2 4 5]
+
+
+---
+
+argsort()
+
+Returns the indexes of sorted elements.
+
+print(np.argsort(arr))
+
+Output
+
+[2 1 3 0]
+
+
+---
+
+10. Broadcasting Arrays
+
+Broadcasting performs operations on arrays of different shapes.
+
+arr = np.array([1,2,3])
+
+print(arr + 5)
+
+Output
+
+[6 7 8]
+
+
+---
+
+11. np.where()
+
+Returns indexes where a condition is true.
+
+arr = np.array([10,20,30])
+
+print(np.where(arr > 15))
+
+
+---
+
+12. np.any()
+
+Checks if at least one element is True.
+
+arr = np.array([False,False,True])
+
+print(np.any(arr))
+
+Output
+
+True
+
+
+---
+
+13. Iterating Over Arrays
+
+1D Array
+
+arr = np.array([10,20,30])
+
+for i in arr:
+    print(i)
+
+
+---
+
+2D Array
+
+arr = np.array([[1,2],
+                [3,4]])
+
+for row in arr:
+    print(row)
+
+
+---
+
+Using np.nditer()
+
+arr = np.array([[1,2],
+                [3,4]])
+
+for i in np.nditer(arr):
+    print(i)
+
+
+---
+
+14. Python Operators on NumPy Arrays
+
+a = np.array([1,2,3])
+b = np.array([4,5,6])
+
+print(a+b)
+print(a-b)
+print(a*b)
+print(a/b)
+
+
+---
+
+15. NumPy Mathematical Functions
+
+arr = np.array([1,4,9])
+
+print(np.sqrt(arr))
+print(np.exp(arr))
+print(np.sin(arr))
+print(np.cos(arr))
+
+Other Functions
+
+np.add(a,b)
+np.subtract(a,b)
+np.multiply(a,b)
+np.divide(a,b)
+np.dot(a,b)
+
+a @ b
+
+
+---
+
+16. NumPy Statistical Functions
+
+arr = np.array([10,20,30,40])
+
+print(np.sum(arr))
+print(np.min(arr))
+print(np.max(arr))
+print(np.mean(arr))
+print(np.median(arr))
+print(np.var(arr))
+print(np.std(arr))
+print(np.corrcoef(arr))
+
+
+---
+
+17. Random Number Generation
+
+Random Decimal Numbers
+
+np.random.rand(3)
+
+
+---
+
+Random Normal Numbers
+
+np.random.randn(3)
+
+
+---
+
+Random Integers
+
+np.random.randint(1,10,5)
+
+
+---
+
+Uniform Distribution
+
+np.random.uniform(1,10,5)
+
+
+---
+
+18. Vectorization
+
+Vectorization performs operations on an entire array without using loops.
+
+arr = np.array([1,2,3])
+
+print(arr * 2)
+
+Output
+
+[2 4 6]
+
+
+---
+
+Part B: Introduction to EDA
+
+19. What is EDA?
+
+EDA (Exploratory Data Analysis) is the process of understanding, cleaning, analyzing, and visualizing data before applying Machine Learning models.
+
+Why EDA?
+
+Understand data
+
+Find missing values
+
+Detect outliers
+
+Identify patterns
+
+Make better decisions
+
+
+
+---
+
+20. EDA vs Python Programming
+
+Python Programming	EDA
+
+Used to write programs	Used to analyze data
+Focus on coding	Focus on data insights
+Uses loops and functions	Uses statistics and visualization
+Builds applications	Finds patterns and trends
+
+
+Case Study
+
+Suppose a school has student marks.
+
+Python Programming
+
+Calculates total marks.
+
+Prints pass/fail.
+
+
+EDA
+
+Finds average marks.
+
+Detects highest and lowest marks.
+
+Identifies missing values.
+
+Creates charts to analyze performance.
+
+
+
+---
+
+21. Types of Data
+
+Numerical Data
+
+Contains numbers.
+
+Examples:
+
+Age
+
+Height
+
+Salary
+
+Marks
+
+
+Types
+
+Discrete Data
+
+Continuous Data
+
+
+
+---
+
+Categorical Data
+
+Contains labels or categories.
+
+Examples:
+
+Gender
+
+City
+
+Department
+
+Blood Group
+
+
+
+---
+
+22. Types of Analysis
+
+Non-Visual Analysis
+
+Uses numerical summaries such as mean, median, and standard deviation.
+
+Visual Analysis
+
+Uses graphs like:
+
+Bar Chart
+
+Histogram
+
+Pie Chart
+
+Scatter Plot
+
+
+Univariate Analysis
+
+Studies one variable.
+
+Example:
+
+Salary distribution
+
+
+Bivariate Analysis
+
+Studies two variables.
+
+Example:
+
+Height vs Weight
+
+
+Descriptive Analysis
+
+Summarizes past data.
+
+Example:
+
+Average monthly sales
+
+
+Inferential Analysis
+
+Makes conclusions from sample data.
+
+Example:
+
+Predicting election results
+
+
+Probabilistic Analysis
+
+Uses probability to predict uncertain events.
+
+Example:
+
+Weather prediction
+
+
+
+---
+
+23. What is Statistics?
+
+Statistics is the science of collecting, organizing, analyzing, and interpreting data.
+
+Why Statistics?
+
+Summarizes data
+
+Helps in decision-making
+
+Finds trends
+
+Predicts future outcomes
+
+Supports Machine Learning
+
+
+
+---
+
+24. Data and Its Measures
+
+Common measures include:
+
+Mean
+
+Median
+
+Mode
+
+Range
+
+Variance
+
+Standard Deviation
+
+
+
+---
+
+25. Measures of Central Tendency (Univariate Analysis)
+
+Mean
+
+Average value.
+
+Formula:
+
+Mean = Sum of values ÷ Number of values
+
+Example:
+
+Marks = 10, 20, 30
+
+Mean = (10 + 20 + 30) ÷ 3 = 20
+
+
+---
+
+Median
+
+Middle value after sorting.
+
+Example:
+
+10, 20, 30, 40, 50
+
+Median = 30
+
+
+---
+
+Mode
+
+Most frequently occurring value.
+
+Example:
+
+10, 20, 20, 30
+
+Mode = 20
+
+
+---
+
+26. Measures of Dispersion (Bivariate Analysis)
+
+Range
+
+Difference between the maximum and minimum values.
+
+Range = Maximum − Minimum
+
+
+---
+
+Variance
+
+Measures how far data values are spread from the mean.
+
+
+---
+
+Standard Deviation
+
+Square root of variance.
+
+Small Standard Deviation → Data is close to the mean.
+
+Large Standard Deviation → Data is spread out.
+
+
+
+---
+
+27. Descriptive Statistics
+
+Descriptive statistics summarize the main characteristics of a dataset.
+
+Common measures:
+
+Count
+
+Mean
+
+Median
+
+Mode
+
+Minimum
+
+Maximum
+
+Range
+
+Variance
+
+Standard Deviation
+
+
+
+---
+
+28. Problem Solving Example
+
+import numpy as np
+
+marks = np.array([70,80,90,60,85])
+
+print("Average:", np.mean(marks))
+print("Highest:", np.max(marks))
+print("Lowest:", np.min(marks))
+print("Standard Deviation:", np.std(marks))
+
+
+---
+
+Exam Summary
+
+NumPy is a fast numerical computing library used for arrays.
+
+Use indexing, slicing, Boolean indexing, reshape(), ravel(), flatten(), and transpose() for array manipulation.
+
+Combine arrays using concatenate(), vstack(), hstack(), column_stack(), hsplit(), and vsplit().
+
+Sort arrays using sort() and argsort().
+
+Broadcasting and vectorization make array operations faster without loops.
+
+NumPy provides mathematical functions (sqrt, exp, sin, cos, dot) and statistical functions (mean, median, var, std, corrcoef).
+
+EDA (Exploratory Data Analysis) is the process of understanding and analyzing data before building Machine Learning models.
+
+Statistics helps summarize and interpret data using measures of central tendency (mean, median, mode) and dispersion (range, variance, standard deviation).
