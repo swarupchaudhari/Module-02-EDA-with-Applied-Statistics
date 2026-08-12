@@ -1,0 +1,832 @@
+📊 Module 3: Introduction to Pandas & Data Analysis
+
+📘 Professional README for Data Science Beginners
+
+
+---
+
+🚀 Module 3: Introduction to Pandas & Data Analysis
+
+> Learn Pandas for data analysis, data cleaning, data manipulation, aggregation, joining multiple datasets, missing-value handling, string operations, and datetime analysis.
+
+
+
+    
+
+
+---
+
+📚 Table of Contents
+
+What is Pandas?
+
+Series
+
+DataFrame
+
+Series vs DataFrame
+
+Creating DataFrames
+
+Loading CSV & Excel
+
+Data Exploration
+
+DataFrame Attributes
+
+DataFrame Methods
+
+Iterating DataFrames
+
+Column Operations
+
+Mathematical & Statistical Operations
+
+GroupBy
+
+Pivot Tables
+
+Crosstab
+
+Concatenation
+
+Merge & Joins
+
+Missing Data
+
+String Operations
+
+Datetime Operations
+
+Exam Summary
+
+
+
+---
+
+🐼 1. What is Pandas?
+
+Pandas is a powerful Python library used for data analysis and data manipulation.
+
+It makes it easy to work with:
+
+📊 Tables
+
+📄 CSV Files
+
+📗 Excel Files
+
+🗃️ Large Datasets
+
+🔍 Data Cleaning
+
+📈 Data Analysis
+
+
+⭐ Advantages
+
+Easy Data Cleaning
+
+Fast Data Analysis
+
+Handles Missing Values
+
+Supports CSV and Excel
+
+Works well with NumPy
+
+Widely used in Data Science and Machine Learning
+
+
+Import Pandas
+
+import pandas as pd
+
+
+---
+
+📌 2. What is a Pandas Series?
+
+A Series is a one-dimensional (1D) labeled array.
+
+import pandas as pd
+
+s = pd.Series([10,20,30,40])
+
+print(s)
+
+Key Point
+
+> Series = 1D labeled data structure
+
+
+
+
+---
+
+📊 3. What is a Pandas DataFrame?
+
+A DataFrame is a two-dimensional (2D) table consisting of rows and columns.
+
+import pandas as pd
+
+data = {
+    "Name": ["Ram", "Sita", "John"],
+    "Age": [20, 22, 21]
+}
+
+df = pd.DataFrame(data)
+
+print(df)
+
+Key Point
+
+> DataFrame = Rows + Columns
+
+
+
+
+---
+
+⚖️ 4. Series vs DataFrame
+
+Series	DataFrame
+
+1D	2D
+Usually represents one column	Multiple columns
+Simpler	More powerful
+Labeled values	Labeled rows and columns
+
+
+
+---
+
+🏗️ 5. Creating Series and DataFrame
+
+Series
+
+s = pd.Series([1,2,3,4])
+
+DataFrame
+
+df = pd.DataFrame({
+    "Name": ["A", "B"],
+    "Marks": [90, 85]
+})
+
+
+---
+
+📂 6. Loading Data
+
+CSV File
+
+df = pd.read_csv("students.csv")
+
+Excel File
+
+df = pd.read_excel("students.xlsx")
+
+
+---
+
+🔍 7. Data Exploration
+
+Pandas provides several functions to understand a dataset.
+
+First 5 Rows
+
+df.head()
+
+Last 5 Rows
+
+df.tail()
+
+Dataset Information
+
+df.info()
+
+Statistical Summary
+
+df.describe()
+
+
+---
+
+📐 8. DataFrame Structure
+
+shape
+
+Returns the number of rows and columns.
+
+df.shape
+
+Example:
+
+(100, 5)
+
+This means:
+
+100 rows
+
+5 columns
+
+
+
+---
+
+🧩 9. DataFrame Attributes
+
+Attribute	Purpose
+
+shape	Number of rows and columns
+columns	Column names
+index	Row labels
+dtypes	Data types
+values	All values
+size	Total number of elements
+ndim	Number of dimensions
+
+
+Example
+
+print(df.columns)
+print(df.dtypes)
+
+
+---
+
+🛠️ 10. DataFrame Utility Methods
+
+Method	Purpose
+
+head()	First rows
+tail()	Last rows
+info()	Dataset information
+describe()	Statistical summary
+sample()	Random rows
+
+
+Example
+
+df.sample(3)
+
+
+---
+
+🔄 11. DataFrame Iteration
+
+iterrows()
+
+Iterates through rows.
+
+for index, row in df.iterrows():
+    print(row["Name"])
+
+itertuples()
+
+for row in df.itertuples():
+    print(row.Name)
+
+> 💡 In practical Data Science, vectorized Pandas operations are generally preferred over manually iterating through rows.
+
+
+
+
+---
+
+🧮 12. Mathematical Functions
+
+Pandas can perform calculations on DataFrames and Series.
+
+df.sum()
+
+df.mean(numeric_only=True)
+
+df.max()
+
+df.min()
+
+
+---
+
+🏷️ 13. Getting Column Labels
+
+print(df.columns)
+
+
+---
+
+✏️ 14. Changing Column Labels
+
+Direct Assignment
+
+df.columns = ["Student", "Marks"]
+
+Using rename()
+
+df.rename(
+    columns={"Name": "Student"},
+    inplace=True
+)
+
+
+---
+
+🎯 15. Selecting Columns
+
+Single Column
+
+df["Name"]
+
+Multiple Columns
+
+df[["Name", "Age"]]
+
+
+---
+
+🔄 16. Swapping Column Order
+
+df = df[["Age", "Name"]]
+
+
+---
+
+➕ 17. Adding New Columns
+
+df["Grade"] = "A"
+
+
+---
+
+❌ 18. Dropping Columns
+
+df.drop(
+    "Grade",
+    axis=1,
+    inplace=True
+)
+
+
+---
+
+⚡ 19. Vectorized Arithmetic Operations
+
+Pandas allows calculations without writing explicit loops.
+
+df["Bonus"] = df["Salary"] + 5000
+
+⭐ Advantage
+
+Vectorized operations are generally shorter, cleaner, and more efficient than manual loops.
+
+
+---
+
+🔄 20. Data Type Conversion
+
+Use astype() to change a column's data type.
+
+df["Age"] = df["Age"].astype(float)
+
+
+---
+
+📈 21. Mathematical & Statistical Functions
+
+df["Marks"].sum()
+
+df["Marks"].mean()
+
+df["Marks"].median()
+
+df["Marks"].std()
+
+df["Marks"].max()
+
+df["Marks"].min()
+
+Common Functions
+
+Function	Purpose
+
+sum()	Total
+mean()	Average
+median()	Middle value
+std()	Standard deviation
+max()	Maximum
+min()	Minimum
+
+
+
+---
+
+📊 22. GroupBy()
+
+groupby() is used to group data according to categories and calculate summary statistics.
+
+Example
+
+df.groupby("Department")["Salary"].mean()
+
+Real-World Example
+
+Find the average salary of each department.
+
+
+---
+
+📋 23. Pivot Table
+
+A Pivot Table is used for multidimensional data analysis and reporting.
+
+pd.pivot_table(
+    df,
+    values="Salary",
+    index="Department",
+    columns="Gender",
+    aggfunc="mean"
+)
+
+
+---
+
+🔢 24. Crosstab()
+
+crosstab() is useful for analyzing relationships between categorical variables.
+
+pd.crosstab(
+    df["Gender"],
+    df["Department"]
+)
+
+
+---
+
+⚖️ 25. GroupBy vs Pivot Table
+
+GroupBy	Pivot Table
+
+Groups data	Creates summary table
+Good for aggregation	Good for multidimensional analysis
+Flexible	Excellent for reports
+Often used in data processing	Often used for reporting
+
+
+
+---
+
+🔗 26. Concatenation
+
+Concatenation combines DataFrames along an axis.
+
+Vertical Stacking
+
+pd.concat(
+    [df1, df2],
+    axis=0
+)
+
+Horizontal Stacking
+
+pd.concat(
+    [df1, df2],
+    axis=1
+)
+
+
+---
+
+🔀 27. Merge – Combining Tables
+
+merge() combines DataFrames using common columns or keys.
+
+
+---
+
+Inner Join
+
+Returns only matching records.
+
+pd.merge(
+    df1,
+    df2,
+    on="ID",
+    how="inner"
+)
+
+
+---
+
+Left Join
+
+Returns all records from the left DataFrame.
+
+pd.merge(
+    df1,
+    df2,
+    on="ID",
+    how="left"
+)
+
+
+---
+
+Right Join
+
+Returns all records from the right DataFrame.
+
+pd.merge(
+    df1,
+    df2,
+    on="ID",
+    how="right"
+)
+
+
+---
+
+Outer Join
+
+Returns records from both DataFrames.
+
+pd.merge(
+    df1,
+    df2,
+    on="ID",
+    how="outer"
+)
+
+
+---
+
+🔑 28. Index-Based Merging
+
+Using join():
+
+df1.join(df2)
+
+Or using indexes with merge():
+
+pd.merge(
+    df1,
+    df2,
+    left_index=True,
+    right_index=True
+)
+
+
+---
+
+🎓 29. Working with Multiple Tables
+
+Student Table
+
+ID	Name
+
+1	Ram
+2	Sita
+
+
+Marks Table
+
+ID	Marks
+
+1	90
+2	85
+
+
+Merge
+
+pd.merge(
+    student,
+    marks,
+    on="ID"
+)
+
+Result
+
+ID	Name	Marks
+
+1	Ram	90
+2	Sita	85
+
+
+
+---
+
+❓ 30. Types of Missing Data
+
+There are three commonly discussed missing-data mechanisms:
+
+MCAR – Missing Completely At Random
+
+Missingness is unrelated to observed or unobserved data.
+
+MAR – Missing At Random
+
+Missingness depends on other observed variables.
+
+MNAR – Missing Not At Random
+
+Missingness is related to the missing value itself or an unobserved factor.
+
+
+---
+
+🔍 31. Identifying Missing Values
+
+df.isnull()
+
+Count Missing Values
+
+df.isnull().sum()
+
+
+---
+
+📊 32. Visualizing Missing Data
+
+Using Seaborn:
+
+import seaborn as sns
+
+sns.heatmap(df.isnull())
+
+This helps visually identify missing-value patterns.
+
+
+---
+
+🩹 33. Missing Value Imputation
+
+Replace with Mean
+
+df["Age"] = df["Age"].fillna(
+    df["Age"].mean()
+)
+
+Replace with Median
+
+df["Age"] = df["Age"].fillna(
+    df["Age"].median()
+)
+
+Replace with Mode
+
+df["City"] = df["City"].fillna(
+    df["City"].mode()[0]
+)
+
+Drop Missing Rows
+
+df.dropna()
+
+> 💡 Important: The best imputation method depends on the data and the reason values are missing.
+
+
+
+
+---
+
+🔤 34. String Operations
+
+Pandas provides the .str accessor for text processing.
+
+Uppercase
+
+df["Name"].str.upper()
+
+Lowercase
+
+df["Name"].str.lower()
+
+String Length
+
+df["Name"].str.len()
+
+Replace Text
+
+df["Name"].str.replace(
+    "Ram",
+    "Ravi"
+)
+
+Check Whether Text Exists
+
+df["Name"].str.contains("A")
+
+
+---
+
+📅 35. Working with Datetime
+
+Convert to Datetime
+
+df["Date"] = pd.to_datetime(
+    df["Date"]
+)
+
+Extract Year
+
+df["Date"].dt.year
+
+Extract Month
+
+df["Date"].dt.month
+
+Extract Day
+
+df["Date"].dt.day
+
+
+---
+
+🌟 Module Highlights
+
+✅ Understand Pandas Series and DataFrames.
+
+✅ Load data from CSV and Excel files.
+
+✅ Explore datasets using head(), tail(), info(), describe(), and shape.
+
+✅ Understand DataFrame attributes such as columns, index, dtypes, and values.
+
+✅ Select, rename, add, remove, and convert columns.
+
+✅ Perform vectorized calculations.
+
+✅ Analyze data using groupby(), pivot_table(), and crosstab().
+
+✅ Combine datasets using concat(), merge(), and join().
+
+✅ Identify and handle missing values.
+
+✅ Perform text processing using the .str accessor.
+
+✅ Work with dates using the .dt accessor.
+
+
+
+---
+
+📌 Exam Summary
+
+Pandas: Python library for data analysis and manipulation.
+
+Series: One-dimensional labeled data structure.
+
+DataFrame: Two-dimensional table containing rows and columns.
+
+Data Loading: Use read_csv() and read_excel().
+
+Data Exploration: Use head(), tail(), info(), describe(), and shape.
+
+DataFrame Attributes: columns, index, dtypes, values, size, and ndim.
+
+Column Operations: Select, rename, add, drop, and convert columns.
+
+GroupBy: Groups data and performs aggregations.
+
+Pivot Table: Creates multidimensional summary tables.
+
+Crosstab: Analyzes relationships between categorical variables.
+
+Concat: Combines DataFrames along rows or columns.
+
+Merge: Combines tables using common keys.
+
+Join: Combines DataFrames based on indexes.
+
+Missing Values: Use isnull(), fillna(), and dropna().
+
+String Operations: Use the .str accessor.
+
+Datetime Operations: Use pd.to_datetime() and the .dt accessor.
+
+
+
+---
+
+👨‍💻 Author
+
+Swarup Satish Chaudhari
+
+🎓 B.Tech in Artificial Intelligence
+
+🐍 Python Developer
+
+📊 Data Science Enthusiast
+
+📈 Aspiring Data Analyst
+
+🤖 Machine Learning Learner
+
+💡 Interested in Data Analytics, AI & Machine Learning
+
+
+
+---
+
+⭐ If this README helped you learn Pandas & Data Analysis, consider giving the repository a Star ⭐ and sharing it with fellow Data Science learners!
