@@ -1,0 +1,1303 @@
+📊 Module 2.4 — Probability, Data Transformation & Data Visualization
+
+> Professional, exam-ready README covering Probability, Pandas transformations, JSON, Statistics, EDA, and Data Visualization with Python examples.
+
+
+
+      
+
+
+---
+
+📚 Table of Contents
+
+1. Frequency Tables
+
+2. Probability
+
+3. Random Experiment
+
+4. Sample Space
+
+5. Event
+
+6. Axioms of Probability
+
+7. Joint, Marginal & Conditional Probability
+
+8. Pandas apply() and map()
+
+9. Window Functions
+
+10. JSON & json_normalize()
+
+11. Measures of Shape
+
+12. Correlation
+
+13. Descriptive Statistics Case Study
+
+14. Data Visualization
+
+15. Univariate Analysis
+
+16. Bivariate Analysis
+
+17. Multivariate Analysis
+
+18. Quick Revision
+
+
+
+---
+
+🎯 Learning Objectives
+
+After completing this module, you will understand:
+
+✅ Frequency tables
+
+✅ Basic probability concepts
+
+✅ Joint, marginal and conditional probability
+
+✅ apply() and map()
+
+✅ rolling() and expanding()
+
+✅ JSON data handling
+
+✅ Nested JSON normalization
+
+✅ Skewness and kurtosis
+
+✅ Correlation
+
+✅ Descriptive statistics
+
+✅ Univariate, bivariate and multivariate analysis
+
+✅ Matplotlib fundamentals
+
+✅ Seaborn visualization
+
+✅ Common statistical plots
+
+
+
+---
+
+Part A — 📊 Frequency Tables & Probability
+
+1. Frequency Tables
+
+A frequency table shows how many times each value or category appears in a dataset.
+
+Example
+
+Marks:
+
+10, 20, 20, 30, 30, 30
+
+Marks	Frequency
+
+10	1
+20	2
+30	3
+
+
+Pandas Example
+
+import pandas as pd
+
+marks = pd.Series([10, 20, 20, 30, 30, 30])
+
+print(marks.value_counts())
+
+⭐ Exam Point
+
+> Frequency = Number of times a value occurs.
+
+
+
+
+---
+
+2. Introduction to Probability
+
+Probability measures the chance that an event will occur.
+
+Probability lies between 0 and 1.
+
+Probability	Meaning
+
+0	Impossible
+0.5	Equal chance
+1	Certain
+
+
+Formula
+
+\[
+P(E)=\frac{\text{Favourable Outcomes}}{\text{Total Outcomes}}
+\]
+
+
+---
+
+3. Random Experiment
+
+A random experiment is an experiment whose exact outcome cannot be predicted with certainty.
+
+Examples
+
+🪙 Tossing a coin
+
+🎲 Rolling a dice
+
+🃏 Drawing a card
+
+👨‍🎓 Selecting a student randomly
+
+
+
+---
+
+4. Sample Space
+
+A sample space is the set of all possible outcomes of a random experiment.
+
+Coin Toss
+
+\[
+S=\{Head,Tail\}
+\]
+
+Dice
+
+\[
+S=\{1,2,3,4,5,6\}
+\]
+
+
+---
+
+5. Event
+
+An event is a specific outcome or group of outcomes from a sample space.
+
+Example
+
+For a dice:
+
+\[
+S=\{1,2,3,4,5,6\}
+\]
+
+Event of getting an even number:
+
+\[
+E=\{2,4,6\}
+\]
+
+
+---
+
+6. Axioms of Probability
+
+There are three basic axioms.
+
+Axiom 1 — Non-Negativity
+
+\[
+P(A)\geq0
+\]
+
+Probability can never be negative.
+
+Axiom 2 — Total Probability
+
+\[
+P(S)=1
+\]
+
+The probability of the entire sample space is 1.
+
+Axiom 3 — Addition Rule
+
+For mutually exclusive events:
+
+\[
+P(A\cup B)=P(A)+P(B)
+\]
+
+
+---
+
+7. Basic Probability Example
+
+Question
+
+What is the probability of getting an even number when rolling a dice?
+
+Sample space:
+
+\[
+S=\{1,2,3,4,5,6\}
+\]
+
+Favourable outcomes:
+
+\[
+E=\{2,4,6\}
+\]
+
+Therefore:
+
+\[
+P(E)=\frac{3}{6}
+\]
+
+\[
+\boxed{P(E)=0.5}
+\]
+
+
+---
+
+8. Joint, Marginal & Conditional Probability
+
+🔗 Joint Probability
+
+Probability of two events occurring together.
+
+\[
+P(A\cap B)
+\]
+
+Example:
+
+A = Student is male
+
+B = Student passed
+
+
+Then:
+
+\[
+P(A\cap B)
+\]
+
+means probability that a student is male AND passed.
+
+
+---
+
+📌 Marginal Probability
+
+Probability of one event without considering another variable.
+
+\[
+P(A)
+\]
+
+Example:
+
+Probability that a randomly selected student is male.
+
+
+---
+
+🎯 Conditional Probability
+
+Probability of an event occurring given that another event has already occurred.
+
+\[
+P(A|B)=\frac{P(A\cap B)}{P(B)}
+\]
+
+Read as:
+
+> Probability of A given B.
+
+
+
+Example:
+
+Probability that a student is male given that the student passed:
+
+\[
+P(Male|Passed)
+\]
+
+
+---
+
+Part B — 🔄 Data Transformation
+
+9. Pandas apply() and map()
+
+apply()
+
+apply() applies a function to Series or DataFrame data.
+
+import pandas as pd
+
+df = pd.DataFrame({
+    "Marks": [50, 60, 70]
+})
+
+df["Double"] = df["Marks"].apply(
+    lambda x: x * 2
+)
+
+print(df)
+
+
+---
+
+map()
+
+map() is mainly used with a Pandas Series for element-wise transformation.
+
+df["Grade"] = df["Marks"].map(
+    lambda x: "Pass" if x >= 40 else "Fail"
+)
+
+apply() vs map()
+
+apply()	map()
+
+More flexible	Mainly used with Series
+Can operate on Series/DataFrame	Element-wise Series mapping
+Supports custom functions	Useful for transformation/replacement
+
+
+⭐ Easy Memory Trick
+
+> map() → Series values
+apply() → More flexible function application
+
+
+
+
+---
+
+10. Window Functions
+
+Window functions calculate values over a specified window of data.
+
+Common Pandas window operations:
+
+rolling()
+
+expanding()
+
+
+
+---
+
+10.1 rolling()
+
+Calculates values using a fixed-size moving window.
+
+df["Moving_Average"] = (
+    df["Marks"].rolling(3).mean()
+)
+
+Example:
+
+10, 20, 30 → 20
+20, 30, 40 → 30
+30, 40, 50 → 40
+
+⭐ Use
+
+Useful for:
+
+Moving averages
+
+Time-series analysis
+
+Trend analysis
+
+
+
+---
+
+10.2 expanding()
+
+The window continuously grows.
+
+df["Cumulative_Average"] = (
+    df["Marks"].expanding().mean()
+)
+
+Example:
+
+10              → 10
+10,20           → 15
+10,20,30        → 20
+10,20,30,40     → 25
+
+Difference
+
+rolling()	expanding()
+
+Fixed window	Growing window
+Moving calculation	Cumulative calculation
+Example: last 3 values	Example: all values so far
+
+
+
+---
+
+Part C — 📄 JSON Data
+
+11. What is JSON?
+
+JSON stands for JavaScript Object Notation.
+
+It is a lightweight format used to store and exchange structured data.
+
+Example
+
+{
+    "name": "Swarup",
+    "age": 20,
+    "city": "Jalgaon"
+}
+
+
+---
+
+12. Reading JSON with Pandas
+
+import pandas as pd
+
+df = pd.read_json("students.json")
+
+print(df)
+
+
+---
+
+13. JSON Record Path Normalization
+
+Nested JSON can be difficult to analyze directly.
+
+json_normalize() converts nested JSON into a flatter tabular structure.
+
+from pandas import json_normalize
+
+data = [
+    {
+        "name": "Rahul",
+        "details": {
+            "age": 20,
+            "city": "Pune"
+        }
+    }
+]
+
+df = json_normalize(data)
+
+print(df)
+
+Possible output:
+
+name	details.age	details.city
+
+Rahul	20	Pune
+
+
+⭐ Exam Point
+
+> json_normalize() converts nested JSON into a DataFrame-friendly flat structure.
+
+
+
+
+---
+
+Part D — 📐 Measures of Shape
+
+14. What are Measures of Shape?
+
+Measures of shape describe the distribution pattern of data.
+
+Important measures:
+
+1. Skewness
+
+
+2. Kurtosis
+
+
+
+
+---
+
+15. Skewness
+
+Skewness measures the asymmetry of a distribution.
+
+Positive Skewness ➡️
+
+Long tail on the right
+
+Mean is generally greater than median
+
+
+/\
+      /  \
+ ___ /    \________
+
+Negative Skewness ⬅️
+
+Long tail on the left
+
+Mean is generally less than median
+
+
+Zero Skewness
+
+Distribution is approximately symmetric.
+
+⭐ Exam Definition
+
+> Skewness measures the asymmetry of a probability distribution.
+
+
+
+
+---
+
+16. Kurtosis
+
+Kurtosis describes the tail heaviness of a distribution.
+
+Common categories:
+
+Type	General Description
+
+Mesokurtic	Similar to normal distribution
+Leptokurtic	Heavier tails
+Platykurtic	Lighter tails
+
+
+⭐ Exam Definition
+
+> Kurtosis describes the tail behavior and peakedness characteristics of a distribution.
+
+
+
+
+---
+
+Part E — 🔗 Measure of Relationship
+
+17. Correlation
+
+Correlation measures the strength and direction of the relationship between two variables.
+
+The correlation coefficient ranges from:
+
+\[
+-1\leq r\leq1
+\]
+
+r	Meaning
+
++1	Perfect positive relationship
+0	No linear correlation
+-1	Perfect negative relationship
+
+
+Example
+
+Study hours and marks may have a positive relationship.
+
+df["Hours"].corr(df["Marks"])
+
+⭐ Important
+
+> Correlation does not by itself prove causation.
+
+
+
+
+---
+
+Part F — 📊 Descriptive Statistics Case Study
+
+Consider:
+
+Student	Hours	Marks
+
+A	2	50
+B	4	60
+C	6	75
+D	8	85
+E	10	95
+
+
+Univariate Analysis
+
+Questions:
+
+What is the average marks?
+
+What is the standard deviation?
+
+What is the minimum/maximum?
+
+
+print(df["Marks"].describe())
+
+Bivariate Analysis
+
+Question:
+
+> Is there a relationship between study hours and marks?
+
+
+
+print(
+    df["Hours"].corr(df["Marks"])
+)
+
+
+---
+
+Part G — 📈 Data Visualization
+
+18. What is Data Visualization?
+
+Data Visualization is the process of representing data using graphs and charts.
+
+Why Use Visualization?
+
+👀 Understand data quickly
+
+🔍 Find patterns
+
+📈 Identify trends
+
+🚨 Detect outliers
+
+⚖️ Compare variables
+
+📊 Communicate insights
+
+
+Popular Libraries
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+
+---
+
+19. Basic Structure of a Plot
+
+A plot may contain:
+
+Figure
+
+Axes
+
+Title
+
+X-axis label
+
+Y-axis label
+
+Ticks
+
+Legend
+
+Plot
+
+Subplots
+
+
+Example
+
+import matplotlib.pyplot as plt
+
+x = [1, 2, 3, 4]
+y = [10, 20, 30, 40]
+
+plt.plot(x, y)
+
+plt.title("Sales Trend")
+plt.xlabel("Month")
+plt.ylabel("Sales")
+
+plt.show()
+
+
+---
+
+20. Figure and Axes
+
+fig, ax = plt.subplots()
+
+ax.plot(
+    [1, 2, 3],
+    [10, 20, 30]
+)
+
+ax.set_title("Example")
+ax.set_xlabel("X")
+ax.set_ylabel("Y")
+
+plt.show()
+
+Difference
+
+Figure → Complete drawing area.
+
+Axes → Area where the actual graph is plotted.
+
+
+---
+
+21. Legends
+
+A legend identifies different lines or categories.
+
+plt.plot(
+    [1, 2, 3],
+    [10, 20, 30],
+    label="Sales"
+)
+
+plt.legend()
+plt.show()
+
+
+---
+
+22. Ticks and Labels
+
+plt.xticks([1, 2, 3])
+plt.yticks([10, 20, 30])
+
+plt.xlabel("Month")
+plt.ylabel("Sales")
+
+
+---
+
+23. Subplots
+
+Subplots allow multiple graphs in one figure.
+
+fig, axes = plt.subplots(1, 2)
+
+axes[0].plot(
+    [1, 2, 3],
+    [10, 20, 30]
+)
+
+axes[1].bar(
+    [1, 2, 3],
+    [20, 30, 40]
+)
+
+plt.show()
+
+
+---
+
+24. Plot Customization
+
+Marker
+
+plt.plot(
+    x, y,
+    marker="o"
+)
+
+Line Style
+
+plt.plot(
+    x, y,
+    linestyle="--"
+)
+
+Axis Limits
+
+plt.xlim(0, 5)
+plt.ylim(0, 50)
+
+Colormap
+
+Colormaps represent numerical values using different shades.
+
+
+---
+
+Part H — 🔎 Univariate Analysis
+
+25. What is Univariate Analysis?
+
+Univariate analysis studies one variable at a time.
+
+Example:
+
+> Analyze the distribution of Salary.
+
+
+
+Common plots:
+
+Histogram
+
+KDE
+
+Box Plot
+
+Violin Plot
+
+
+
+---
+
+26. Histogram
+
+A histogram displays the distribution and frequency of numerical data.
+
+plt.hist(df["Marks"])
+
+plt.xlabel("Marks")
+plt.ylabel("Frequency")
+
+plt.show()
+
+Used For
+
+Distribution
+
+Frequency
+
+Detecting skewness
+
+Understanding spread
+
+
+
+---
+
+27. KDE Plot
+
+KDE = Kernel Density Estimate
+
+It shows a smooth estimate of the distribution.
+
+sns.kdeplot(
+    data=df,
+    x="Marks"
+)
+
+plt.show()
+
+
+---
+
+28. Box Plot
+
+A box plot summarizes:
+
+Minimum
+
+Q1
+
+Median
+
+Q3
+
+Maximum
+
+Potential outliers
+
+
+sns.boxplot(
+    data=df,
+    x="Marks"
+)
+
+plt.show()
+
+
+---
+
+29. Violin Plot
+
+A violin plot combines features of:
+
+Box plot
+
+Density plot
+
+
+sns.violinplot(
+    data=df,
+    x="Marks"
+)
+
+plt.show()
+
+
+---
+
+30. Bar Plot
+
+A bar plot is mainly used to compare categories.
+
+sns.barplot(
+    data=df,
+    x="Department",
+    y="Salary"
+)
+
+plt.show()
+
+
+---
+
+31. Count Plot
+
+A count plot shows the number of observations in each category.
+
+sns.countplot(
+    data=df,
+    x="Department"
+)
+
+plt.show()
+
+
+---
+
+Part I — 🔗 Bivariate & Multivariate Analysis
+
+32. Bivariate Analysis
+
+Bivariate analysis studies two variables.
+
+Example:
+
+Study Hours ↔ Marks
+
+
+---
+
+33. Scatter Plot
+
+A scatter plot shows the relationship between two numerical variables.
+
+sns.scatterplot(
+    data=df,
+    x="Hours",
+    y="Marks"
+)
+
+plt.show()
+
+Best For
+
+> Numerical variable ↔ Numerical variable
+
+
+
+
+---
+
+34. Heatmap
+
+A heatmap represents values using different shades and is commonly used for correlation matrices.
+
+sns.heatmap(
+    df.corr(numeric_only=True),
+    annot=True
+)
+
+plt.show()
+
+⭐ Exam Point
+
+> Heatmaps are commonly used to visualize correlation between numerical variables.
+
+
+
+
+---
+
+35. Line Plot
+
+Line plots are useful for trends over time or ordered observations.
+
+sns.lineplot(
+    data=df,
+    x="Month",
+    y="Sales"
+)
+
+plt.show()
+
+
+---
+
+36. KDE Plot with Categories
+
+KDE can compare distributions across groups.
+
+sns.kdeplot(
+    data=df,
+    x="Marks",
+    hue="Gender"
+)
+
+plt.show()
+
+
+---
+
+37. Box Plot with Categories
+
+Useful for comparing numerical distributions between categories.
+
+sns.boxplot(
+    data=df,
+    x="Department",
+    y="Salary"
+)
+
+plt.show()
+
+
+---
+
+38. Histogram with Categories
+
+sns.histplot(
+    data=df,
+    x="Marks",
+    hue="Gender"
+)
+
+plt.show()
+
+
+---
+
+39. Boxen Plot
+
+A boxen plot provides more detailed information about distributions and can be particularly useful for larger datasets.
+
+sns.boxenplot(
+    data=df,
+    x="Department",
+    y="Salary"
+)
+
+plt.show()
+
+
+---
+
+40. Violin Plot with Categories
+
+sns.violinplot(
+    data=df,
+    x="Department",
+    y="Salary"
+)
+
+plt.show()
+
+
+---
+
+41. Count Plot
+
+Used to compare the number of observations in categories.
+
+sns.countplot(
+    data=df,
+    x="Department"
+)
+
+plt.show()
+
+
+---
+
+42. Stacked Bar Plot
+
+A stacked bar chart displays multiple categories inside each bar.
+
+pd.crosstab(
+    df["Department"],
+    df["Gender"]
+).plot(
+    kind="bar",
+    stacked=True
+)
+
+plt.show()
+
+
+---
+
+43. Pairplot
+
+A pairplot shows relationships between multiple numerical variables.
+
+sns.pairplot(df)
+
+plt.show()
+
+It generally contains:
+
+Scatter plots between variables
+
+Distribution plots on the diagonal
+
+
+
+---
+
+44. Multivariate Analysis
+
+Multivariate analysis studies three or more variables simultaneously.
+
+Example
+
+Age + Salary + Experience
+
+Useful Visualizations
+
+Pairplot
+
+Heatmap
+
+Grouped plots
+
+Facet plots
+
+
+
+---
+
+⭐ Quick Revision Table
+
+Topic	Important Point
+
+Frequency Table	Counts occurrences
+Probability	Measures chance of an event
+Random Experiment	Outcome cannot be predicted with certainty
+Sample Space	All possible outcomes
+Event	Selected outcome(s)
+Joint Probability	Probability of A and B together
+Marginal Probability	Probability of one event
+Conditional Probability	Probability given another event
+apply()	Flexible function application
+map()	Element-wise mapping on Series
+rolling()	Fixed moving window
+expanding()	Growing window
+JSON	Structured data format
+json_normalize()	Flattens nested JSON
+Skewness	Measures asymmetry
+Kurtosis	Describes tail/peakedness characteristics
+Correlation	Measures linear relationship
+Histogram	Numerical distribution
+KDE	Smooth distribution estimate
+Box Plot	Distribution and potential outliers
+Violin Plot	Distribution + density
+Bar Plot	Category comparison
+Count Plot	Category frequency
+Scatter Plot	Two numerical variables
+Heatmap	Matrix/correlation visualization
+Line Plot	Trend over ordered values/time
+Pairplot	Multiple variable relationships
+Stacked Bar	Multiple categorical groups
+
+
+
+---
+
+🧠 One-Minute Exam Revision
+
+Frequency Table
+       ↓
+Probability
+       ↓
+Joint / Marginal / Conditional Probability
+       ↓
+Pandas Transformation
+       ↓
+apply() / map()
+       ↓
+rolling() / expanding()
+       ↓
+JSON / json_normalize()
+       ↓
+Skewness / Kurtosis
+       ↓
+Correlation
+       ↓
+Descriptive Statistics
+       ↓
+EDA
+       ↓
+Visualization
+       ↓
+Univariate → Bivariate → Multivariate
+
+
+---
+
+🚀 Module Highlights
+
+Probability
+
+Sample Space → Event → Probability → Joint → Marginal → Conditional
+
+Data Transformation
+
+apply() → map() → rolling() → expanding()
+
+Statistics
+
+Mean → Median → Variance → Standard Deviation → Skewness → Kurtosis → Correlation
+
+Visualization
+
+Histogram → KDE → Box Plot → Violin → Bar → Count → Scatter → Heatmap → Line → Pairplot
+
+
+---
+
+👨‍💻 Author
+
+Swarup Satish Chaudhari
+
+🎓 B.Tech Artificial Intelligence
+🐍 Python | Pandas | NumPy
+📊 Data Analytics & Data Science
+🤖 Machine Learning & AI
+
+
+---
+
+⭐ Learning Goal
+
+> Build a strong foundation in Probability, Statistics, Pandas Data Transformation, EDA, and Data Visualization for Data Science and Machine Learning.
+
+
+
+Keep learning. Keep analyzing. Keep building. 🚀📊
