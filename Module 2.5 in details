@@ -1,0 +1,1430 @@
+📘 Module 2.5 — Data Transformation, Distributions & Inferential Statistics
+
+Below are detailed, simple, exam-ready notes with definitions, formulas, examples, comparisons, Python code, and important points.
+
+
+---
+
+Part A — Data Transformation & Feature Scaling
+
+1. What is Feature Scaling?
+
+Feature scaling is the process of converting numerical features into a similar or comparable scale.
+
+In a dataset, different columns may have very different ranges.
+
+Example
+
+Age	Salary
+
+20	20,000
+25	50,000
+30	1,00,000
+
+
+Here, Age ranges from 20–30, while Salary ranges from 20,000–1,00,000.
+
+Some machine-learning algorithms are affected by these differences in scale. Scaling prevents a feature with larger numerical values from dominating distance- or gradient-based calculations.
+
+Why is Feature Scaling important?
+
+Makes numerical features comparable.
+
+Can improve optimization for some ML algorithms.
+
+Helps distance-based algorithms.
+
+Helps algorithms such as K-Nearest Neighbors and K-Means.
+
+Is commonly useful with algorithms based on gradients.
+
+
+Common methods
+
+1. Normalization
+
+
+2. Standardization
+
+
+
+
+---
+
+2. Normalization
+
+Normalization, commonly referring to Min-Max scaling, converts numerical values to a specified range, often 0 to 1.
+
+Formula
+
+\[
+X'=\frac{X-X_{min}}{X_{max}-X_{min}}
+\]
+
+Where:
+
+\(X\) = original value
+
+\(X_{min}\) = minimum value
+
+\(X_{max}\) = maximum value
+
+\(X'\) = normalized value
+
+
+Example
+
+Suppose:
+
+\(X=50\)
+
+Minimum = 0
+
+Maximum = 100
+
+
+Then:
+
+\[
+X'=\frac{50-0}{100-0}
+\]
+
+\[
+X'=0.5
+\]
+
+So, the normalized value is 0.5.
+
+Python Example
+
+from sklearn.preprocessing import MinMaxScaler
+
+scaler = MinMaxScaler()
+
+df["Marks_scaled"] = scaler.fit_transform(
+    df[["Marks"]]
+)
+
+Advantages
+
+Easy to understand.
+
+Produces a fixed range.
+
+Useful when features have different units.
+
+Often useful for distance-based algorithms.
+
+
+Disadvantage
+
+Min-Max scaling can be strongly affected by outliers, because it uses the minimum and maximum values.
+
+
+---
+
+3. Standardization
+
+Standardization converts data so that the transformed feature has approximately:
+
+Mean = 0
+
+Standard deviation = 1
+
+
+It is also called Z-score standardization.
+
+Formula
+
+\[
+Z=\frac{X-\mu}{\sigma}
+\]
+
+Where:
+
+\(X\) = original value
+
+\(\mu\) = mean
+
+\(\sigma\) = standard deviation
+
+\(Z\) = standardized value
+
+
+Example
+
+Suppose:
+
+\[
+X=70
+\]
+
+Mean:
+
+\[
+\mu=60
+\]
+
+Standard deviation:
+
+\[
+\sigma=10
+\]
+
+Then:
+
+\[
+Z=\frac{70-60}{10}=1
+\]
+
+Therefore, the value is 1 standard deviation above the mean.
+
+Python
+
+from sklearn.preprocessing import StandardScaler
+
+scaler = StandardScaler()
+
+df["Marks_scaled"] = scaler.fit_transform(
+    df[["Marks"]]
+)
+
+
+---
+
+4. Normalization vs Standardization
+
+Normalization	Standardization
+
+Usually converts values to 0–1	Centers data around 0
+Uses minimum and maximum	Uses mean and standard deviation
+Also called Min-Max scaling	Also called Z-score scaling
+Sensitive to extreme min/max values	Often more suitable when data has no strict bounded range
+Useful when a fixed range is desirable	Commonly used in many ML algorithms
+
+
+Easy Memory Trick
+
+Normalization → Min & Max
+
+Standardization → Mean & Standard Deviation
+
+
+---
+
+5. What is Data Transformation?
+
+Data transformation means changing data from one form into another form that is more suitable for analysis or machine learning.
+
+Common transformations
+
+Scaling
+
+Log transformation
+
+Box-Cox transformation
+
+Encoding
+
+Aggregation
+
+Creating new features
+
+
+Why transform data?
+
+Data transformation can help:
+
+Reduce skewness.
+
+Make variables more suitable for analysis.
+
+Put features on comparable scales.
+
+Improve the behavior of some ML algorithms.
+
+Create meaningful features.
+
+
+
+---
+
+6. Log Transformation
+
+A log transformation replaces a value with its logarithm.
+
+\[
+X'=\log(X)
+\]
+
+It is particularly useful for right-skewed data.
+
+Example
+
+Income data may contain:
+
+20,000
+25,000
+30,000
+40,000
+50,000
+5,00,000
+
+The very large value can create strong right skewness.
+
+A log transformation compresses large values more strongly than small values.
+
+Python
+
+import numpy as np
+
+df["log_salary"] = np.log(df["Salary"])
+
+If zero values exist
+
+Normal logarithm of zero is undefined. A common practical transformation is:
+
+df["log_salary"] = np.log1p(df["Salary"])
+
+log1p(x) calculates:
+
+\[
+\log(1+x)
+\]
+
+Important Point
+
+Log transformation is not appropriate for arbitrary data containing negative values without first choosing an appropriate transformation strategy.
+
+
+---
+
+7. Box-Cox Transformation
+
+Box-Cox transformation is a statistical transformation used to reduce skewness and make positive-valued data more suitable for statistical modeling.
+
+It generally requires strictly positive values.
+
+Python
+
+from scipy.stats import boxcox
+
+transformed, lam = boxcox(df["Salary"])
+
+Here:
+
+transformed = transformed data
+
+lam = estimated transformation parameter
+
+
+Why use Box-Cox?
+
+Reduce skewness.
+
+Stabilize variance in some situations.
+
+Make data closer to a normal distribution.
+
+
+Important
+
+Box-Cox requires positive values.
+
+
+---
+
+Part B — Feature Engineering
+
+8. What is Feature Engineering?
+
+Feature engineering is the process of creating, modifying, or selecting variables/features so that they contain useful information for analysis or machine learning.
+
+A feature is an input variable used by a model.
+
+Example 1 — Date
+
+Suppose:
+
+Date = 15-08-2026
+
+We can create:
+
+Year = 2026
+Month = 8
+Day = 15
+
+Python:
+
+df["Date"] = pd.to_datetime(df["Date"])
+
+df["Year"] = df["Date"].dt.year
+df["Month"] = df["Date"].dt.month
+df["Day"] = df["Date"].dt.day
+
+Example 2 — BMI
+
+Suppose:
+
+Height = 1.7 m
+Weight = 70 kg
+
+We can create:
+
+\[
+BMI=\frac{Weight}{Height^2}
+\]
+
+df["BMI"] = df["Weight"] / (df["Height"] ** 2)
+
+Benefits
+
+Creates more meaningful variables.
+
+Can improve model performance.
+
+Helps represent domain knowledge.
+
+Can simplify patterns for ML models.
+
+
+
+---
+
+Part C — Data Distribution
+
+9. What is a Data Distribution?
+
+A data distribution describes how values are arranged or spread across a dataset.
+
+Example
+
+40, 50, 60, 70, 80, 90
+
+A distribution helps us understand:
+
+Where values are concentrated.
+
+How widely values are spread.
+
+Whether the data is symmetric.
+
+Whether extreme values exist.
+
+Whether the data is skewed.
+
+
+
+---
+
+10. Why Study Data Distribution?
+
+Understanding distributions is important because it helps us:
+
+1. Understand the dataset.
+
+
+2. Identify patterns.
+
+
+3. Detect skewness.
+
+
+4. Detect unusual observations.
+
+
+5. Select suitable statistical methods.
+
+
+6. Understand probability.
+
+
+7. Perform hypothesis testing.
+
+
+8. Choose appropriate transformations.
+
+
+
+
+---
+
+11. Characteristics of a Distribution
+
+There are four important characteristics.
+
+1. Center
+
+Shows where the data is generally located.
+
+Examples:
+
+Mean
+
+Median
+
+Mode
+
+
+2. Spread
+
+Shows how widely values are distributed.
+
+Examples:
+
+Range
+
+Variance
+
+Standard deviation
+
+
+3. Shape
+
+Examples:
+
+Symmetric
+
+Right-skewed
+
+Left-skewed
+
+Bell-shaped
+
+
+4. Tails
+
+Tails describe the behavior of extreme values at the ends of a distribution.
+
+
+---
+
+Part D — Types of Distributions
+
+There are two major categories:
+
+1. Discrete Distributions
+
+Values are countable.
+
+Examples:
+
+Bernoulli
+
+Binomial
+
+Poisson
+
+
+2. Continuous Distributions
+
+Values can take any value within an interval.
+
+Examples:
+
+Uniform
+
+Normal
+
+Exponential
+
+Log-normal
+
+Pareto
+
+
+
+---
+
+12. Introduction to SciPy
+
+SciPy is a Python library used for scientific and statistical computing.
+
+Import:
+
+import scipy
+
+Statistics:
+
+from scipy import stats
+
+SciPy provides tools for:
+
+Probability distributions
+
+Statistical tests
+
+Probability calculations
+
+Optimization
+
+Scientific calculations
+
+
+
+---
+
+Part E — Discrete Probability Distributions
+
+13. Bernoulli Distribution
+
+The Bernoulli distribution represents a single experiment with exactly two possible outcomes.
+
+Examples:
+
+Head / Tail
+
+Pass / Fail
+
+Yes / No
+
+Success / Failure
+
+
+Usually:
+
+Success = 1
+Failure = 0
+
+If probability of success is \(p\), then probability of failure is:
+
+\[
+1-p
+\]
+
+Example
+
+Probability of success:
+
+\[
+p=0.7
+\]
+
+Python:
+
+from scipy.stats import bernoulli
+
+bernoulli.pmf(1, 0.7)
+
+Key Point
+
+Bernoulli = One trial + Two outcomes
+
+
+---
+
+14. Binomial Distribution
+
+The Binomial distribution represents the number of successes in a fixed number of independent Bernoulli trials.
+
+Conditions
+
+1. Fixed number of trials.
+
+
+2. Each trial has two possible outcomes.
+
+
+3. Probability of success remains constant.
+
+
+4. Trials are independent.
+
+
+
+Example
+
+Toss a coin 10 times.
+
+Question:
+
+> What is the probability of getting exactly 5 heads?
+
+
+
+from scipy.stats import binom
+
+binom.pmf(5, 10, 0.5)
+
+This represents:
+
+\[
+P(X=5)
+\]
+
+Easy Memory Trick
+
+Bernoulli → One trial
+
+Binomial → Many Bernoulli trials
+
+
+---
+
+15. Poisson Distribution
+
+The Poisson distribution models the number of events occurring during a fixed interval of time or space when events occur according to an assumed average rate.
+
+Examples
+
+Customers arriving per hour.
+
+Calls received per minute.
+
+Accidents per day.
+
+Emails received per hour.
+
+
+Parameter:
+
+\[
+\lambda = \text{average event rate}
+\]
+
+Python
+
+from scipy.stats import poisson
+
+poisson.pmf(3, 5)
+
+This calculates the probability of exactly 3 events when the average rate is 5.
+
+Easy Memory Trick
+
+Poisson → Count events in an interval
+
+
+---
+
+Part F — Continuous Distributions
+
+16. Uniform Distribution
+
+In a continuous uniform distribution, values in a specified interval have equal probability density.
+
+Example:
+
+Random value between 0 and 1.
+
+from scipy.stats import uniform
+
+uniform.pdf(0.5)
+
+Example
+
+A random number generator that gives values uniformly between 0 and 1 can be modeled using a uniform distribution.
+
+
+---
+
+17. Normal Distribution
+
+The normal distribution is one of the most important probability distributions in statistics.
+
+It is:
+
+Symmetric.
+
+Bell-shaped.
+
+Centered around its mean.
+
+
+For an ideal normal distribution:
+
+\[
+Mean = Median = Mode
+\]
+
+Diagram
+
+*
+              *     *
+            *         *
+          *             *
+       **                 **
+_____*_______________________*_____
+                 Mean
+
+Python
+
+from scipy.stats import norm
+
+norm.pdf(0)
+
+
+---
+
+18. Exponential Distribution
+
+The Exponential distribution is commonly used to model the waiting time between events.
+
+Examples
+
+Time until next customer arrives.
+
+Time until a machine failure.
+
+Time between telephone calls.
+
+
+Python:
+
+from scipy.stats import expon
+
+expon.pdf(2)
+
+Easy Memory Trick
+
+Exponential → Waiting time
+
+
+---
+
+19. Log-Normal Distribution
+
+A variable has a log-normal distribution when its logarithm follows a normal distribution.
+
+Log-normal data is generally:
+
+Positive.
+
+Right-skewed.
+
+Associated with multiplicative processes.
+
+
+Examples can include certain:
+
+Income data.
+
+Price data.
+
+Biological measurements.
+
+
+Important
+
+Normal distribution is symmetric, while log-normal distribution is generally right-skewed.
+
+
+---
+
+20. Pareto Distribution
+
+The Pareto distribution is a heavy-tailed distribution used to model situations where a relatively small number of observations may account for a large proportion of the total.
+
+Example
+
+A small percentage of customers may generate a large percentage of sales.
+
+This idea is commonly associated with the 80/20 principle, although the exact percentages depend on the real data.
+
+Key Point
+
+Pareto → Heavy tail / unequal contribution
+
+
+---
+
+21. 68–95–99.7% Rule
+
+For a normal distribution:
+
+Within 1 standard deviation
+
+Approximately:
+
+\[
+68\%
+\]
+
+Within 2 standard deviations
+
+Approximately:
+
+\[
+95\%
+\]
+
+Within 3 standard deviations
+
+Approximately:
+
+\[
+99.7\%
+\]
+
+Easy Memory Trick
+
+1 SD → 68%
+2 SD → 95%
+3 SD → 99.7%
+
+
+---
+
+22. QQ Plot
+
+QQ stands for Quantile-Quantile.
+
+A QQ plot compares the quantiles of sample data with the quantiles expected under a theoretical distribution.
+
+It is commonly used to check whether data is reasonably consistent with a normal distribution.
+
+Python
+
+import scipy.stats as stats
+import matplotlib.pyplot as plt
+
+stats.probplot(
+    df["Marks"],
+    dist="norm",
+    plot=plt
+)
+
+plt.show()
+
+Interpretation
+
+If the points approximately follow a straight line:
+
+> The data is reasonably consistent with the assumed normal distribution.
+
+
+
+If there are large deviations:
+
+> The data may not follow the assumed distribution well.
+
+
+
+
+---
+
+Part G — Inferential Statistics
+
+23. What is Inferential Statistics?
+
+Inferential statistics uses information from a sample to make conclusions about a larger population.
+
+Example
+
+Suppose a college has 10,000 students.
+
+It may be difficult to survey all 10,000 students.
+
+Instead, we select 200 students and analyze their data.
+
+Population
+    ↓
+Select Sample
+    ↓
+Analyze Sample
+    ↓
+Make Inference
+    ↓
+Population
+
+
+---
+
+24. Population vs Sample
+
+Population
+
+The population is the complete group being studied.
+
+Example:
+
+> All students in a college.
+
+
+
+Sample
+
+A sample is a smaller group selected from the population.
+
+Example:
+
+> 100 students selected from that college.
+
+
+
+Population	Sample
+
+Entire group	Subset
+Usually larger	Usually smaller
+Population parameter	Sample statistic
+Example: all students	Example: 100 students
+
+
+Symbols
+
+Population mean:
+
+\[
+\mu
+\]
+
+Sample mean:
+
+\[
+\bar{x}
+\]
+
+
+---
+
+25. Why is Inferential Statistics Used?
+
+It helps us:
+
+Estimate population parameters.
+
+Test hypotheses.
+
+Make predictions.
+
+Make decisions using sample data.
+
+Reduce the time and cost of collecting data.
+
+
+
+---
+
+Part H — Sampling Techniques
+
+26. Convenience Sampling
+
+In convenience sampling, participants are selected because they are easy to access.
+
+Example
+
+Asking students sitting near you to complete a survey.
+
+Advantages
+
+Simple.
+
+Fast.
+
+Cheap.
+
+
+Disadvantages
+
+May be biased.
+
+May not represent the population accurately.
+
+
+
+---
+
+27. Systematic Sampling
+
+In systematic sampling, every \(k\)-th member is selected after an appropriate starting point.
+
+Example
+
+Select every 10th student:
+
+10th
+20th
+30th
+40th
+...
+
+Advantage
+
+Simple and systematic.
+
+Disadvantage
+
+Can be problematic if the population has a pattern that aligns with the sampling interval.
+
+
+---
+
+28. Simple Random Sampling
+
+In simple random sampling, each member has an equal chance of being selected.
+
+Pandas Example
+
+sample = df.sample(
+    n=10,
+    random_state=42
+)
+
+Here:
+
+n=10 → selects 10 rows.
+
+random_state=42 → makes the random selection reproducible.
+
+
+
+---
+
+29. Stratified Sampling
+
+In stratified sampling, the population is divided into meaningful groups called strata, and samples are selected from each group.
+
+Example
+
+College
+   ↓
+-----------------
+Engineering
+Management
+Science
+-----------------
+   ↓
+Sample from each group
+
+Advantage
+
+Ensures important subgroups are represented.
+
+
+---
+
+30. Cluster Sampling
+
+In cluster sampling, the population is divided into clusters, and entire clusters are selected.
+
+Example
+
+All colleges in Maharashtra
+          ↓
+Select 5 colleges
+          ↓
+Survey students in selected colleges
+
+Stratified vs Cluster
+
+Stratified	Cluster
+
+Sample from every important group	Select some groups
+Groups are called strata	Groups are called clusters
+Goal is subgroup representation	Goal is efficient sampling
+
+
+
+---
+
+31. Sampling in Pandas
+
+Random sample
+
+sample = df.sample(n=10)
+
+20% sample
+
+sample = df.sample(frac=0.2)
+
+frac=0.2 means approximately 20% of rows.
+
+
+---
+
+Part I — Estimation
+
+32. What is Estimation?
+
+Estimation uses sample information to estimate an unknown population parameter.
+
+There are two major types:
+
+1. Point Estimation
+
+
+2. Interval Estimation
+
+
+
+
+---
+
+33. Point Estimate
+
+A point estimate provides a single numerical value as an estimate of an unknown population parameter.
+
+Example
+
+Suppose we select 100 students.
+
+Their average marks are:
+
+\[
+72
+\]
+
+Then:
+
+\[
+\bar{x}=72
+\]
+
+is a point estimate of the population mean.
+
+Python
+
+sample_mean = df["Marks"].mean()
+
+print(sample_mean)
+
+
+---
+
+34. Point Estimate Using a Single Sample
+
+Suppose:
+
+Sample size = 50
+Sample mean = 72
+
+Then:
+
+\[
+\bar{x}=72
+\]
+
+Therefore, 72 is the point estimate of the population mean.
+
+Important
+
+A point estimate gives one value, while an interval estimate gives a range of plausible values.
+
+
+---
+
+Part J — Central Limit Theorem
+
+35. Central Limit Theorem (CLT)
+
+The Central Limit Theorem is one of the most important concepts in inferential statistics.
+
+It states that, under common conditions, as the sample size becomes sufficiently large, the sampling distribution of the sample mean becomes approximately normal, even if the original population is not normally distributed.
+
+Simple Explanation
+
+Original Population
+        ↓
+Take many random samples
+        ↓
+Calculate mean of each sample
+        ↓
+Create distribution of sample means
+        ↓
+Approximately Normal
+
+
+---
+
+36. Example of CLT
+
+Suppose the original population contains highly skewed data.
+
+We repeatedly take samples of size 100.
+
+For every sample, calculate its mean:
+
+Sample 1 → Mean = 70
+Sample 2 → Mean = 72
+Sample 3 → Mean = 71
+Sample 4 → Mean = 73
+Sample 5 → Mean = 71
+...
+
+If we plot many of these sample means, the distribution will tend toward an approximately normal shape under the CLT conditions.
+
+
+---
+
+37. Why is CLT Important?
+
+The Central Limit Theorem allows us to use sampling distributions to:
+
+Estimate population means.
+
+Construct confidence intervals.
+
+Perform hypothesis tests.
+
+Apply many normal-based statistical methods.
+
+
+It is one of the foundations of inferential statistics.
+
+
+---
+
+38. CLT and Point Estimate
+
+Suppose:
+
+Population mean = Unknown
+Sample size = 100
+Sample mean = 75
+
+Our point estimate is:
+
+\[
+\bar{x}=75
+\]
+
+If we repeatedly take samples of size 100 and calculate their means, the distribution of those means will tend toward normality under the CLT conditions.
+
+
+---
+
+39. Point Estimate Using Multiple Samples
+
+Suppose we take four samples:
+
+Sample	Sample Mean
+
+Sample 1	70
+Sample 2	72
+Sample 3	71
+Sample 4	73
+
+
+The means form a sampling distribution.
+
+As we collect more samples, the behavior of the sampling distribution can be studied.
+
+
+---
+
+⭐ Important Comparison Table
+
+Concept	Meaning
+
+Data Transformation	Changes data into a suitable form
+Feature Scaling	Makes numerical features comparable
+Normalization	Usually scales values to 0–1
+Standardization	Mean 0, SD 1
+Log Transformation	Helps reduce right skewness
+Box-Cox	Transformation for positive data
+Feature Engineering	Creates/modifies useful features
+Distribution	Describes how values are spread
+Bernoulli	One trial, two outcomes
+Binomial	Successes in fixed trials
+Poisson	Event counts in an interval
+Uniform	Equal density across interval
+Normal	Bell-shaped and symmetric
+Exponential	Waiting time
+Log-Normal	Log-transformed variable is normal
+Pareto	Heavy-tailed distribution
+QQ Plot	Compares sample and theoretical quantiles
+Population	Complete group
+Sample	Subset of population
+Inferential Statistics	Sample → population conclusion
+Convenience Sampling	Easily available participants
+Systematic Sampling	Every \(k\)-th member
+Random Sampling	Equal selection chance
+Stratified Sampling	Sample from each subgroup
+Cluster Sampling	Select groups/clusters
+Point Estimate	Single-value estimate
+CLT	Sampling mean distribution tends toward normality
+
+
+
+---
+
+📝 Most Important Exam Questions
+
+Short Answer Questions
+
+1. What is feature scaling?
+
+
+2. Define normalization.
+
+
+3. Write the Min-Max normalization formula.
+
+
+4. What is standardization?
+
+
+5. Write the Z-score formula.
+
+
+6. Differentiate normalization and standardization.
+
+
+7. What is data transformation?
+
+
+8. What is log transformation?
+
+
+9. What is Box-Cox transformation?
+
+
+10. What is feature engineering?
+
+
+11. Define data distribution.
+
+
+12. What is Bernoulli distribution?
+
+
+13. What is Binomial distribution?
+
+
+14. What is Poisson distribution?
+
+
+15. What is normal distribution?
+
+
+16. What is exponential distribution?
+
+
+17. Explain the 68–95–99.7 rule.
+
+
+18. What is a QQ plot?
+
+
+19. Define population and sample.
+
+
+20. What is inferential statistics?
+
+
+21. What is convenience sampling?
+
+
+22. What is systematic sampling?
+
+
+
+Data
+ ↓
+Transformation
+ ↓
+Feature Engineering
+ ↓
+Understand Distribution
+ ↓
+Probability Distributions
+ ↓
+Sampling
+ ↓
+Sample Statistics
+ ↓
+Point Estimation
+ ↓
+Central Limit Theorem
+ ↓
+Inferential Statistics
