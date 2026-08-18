@@ -1,0 +1,94 @@
+📘 Module 2.5 — Data Transformation, Distributions & Inferential Statistics
+
+Your notes are already well structured. For an exam-ready README, I recommend using clear section headings, highlighted key terms, formulas, comparison tables, and practical Python examples.
+
+⭐ Quick Revision
+
+Topic	Key Point
+
+Feature Scaling	Makes numerical features comparable
+Normalization	Usually scales values between 0 and 1
+Standardization	Mean ≈ 0 and SD ≈ 1
+Log Transformation	Helps reduce right skewness
+Box-Cox	Helps transform positive data toward normality
+Feature Engineering	Creates or improves useful features
+Distribution	Shows how data values are spread
+Bernoulli	Two possible outcomes
+Binomial	Number of successes in fixed trials
+Poisson	Number of events in a fixed interval
+Uniform	Equal density over an interval
+Normal	Bell-shaped and symmetric
+Exponential	Waiting time between events
+Log-Normal	Log of variable follows a normal distribution
+Pareto	Heavy-tailed distribution
+68–95–99.7 Rule	1, 2, 3 SD percentages in normal distribution
+QQ Plot	Compares sample distribution with a theoretical distribution
+Population	Entire group
+Sample	Subset of population
+Inferential Statistics	Uses sample data to draw population conclusions
+Point Estimate	Single-value estimate
+CLT	Sampling distribution of the mean tends toward normality
+
+
+🔑 Important Formulas
+
+Min-Max Normalization
+
+\[
+X'=\frac{X-X_{min}}{X_{max}-X_{min}}
+\]
+
+Z-Score Standardization
+
+\[
+Z=\frac{X-\mu}{\sigma}
+\]
+
+BMI Feature
+
+\[
+BMI=\frac{Weight}{Height^2}
+\]
+
+Normal Distribution Rule
+
+\[
+1\sigma \approx 68\%,\quad
+2\sigma \approx 95\%,\quad
+3\sigma \approx 99.7\%
+\]
+
+Point Estimate
+
+\[
+\bar{x}=\frac{\sum x_i}{n}
+\]
+
+🐍 Important Python Libraries
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import scipy.stats as stats
+
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import StandardScaler
+
+🎯 Exam Focus
+
+For theory questions, especially remember:
+
+Normalization vs Standardization →
+Normalization uses minimum and maximum, while standardization uses mean and standard deviation.
+
+Discrete vs Continuous →
+Discrete values are countable; continuous values can take any value within a range.
+
+Population vs Sample →
+Population = entire group; Sample = subset of the population.
+
+Descriptive vs Inferential Statistics →
+Descriptive statistics summarize data; inferential statistics use sample data to make conclusions about a population.
+
+CLT →
+When sample size is sufficiently large, the sampling distribution of the sample mean tends to become approximately normal, under its usual conditions.
